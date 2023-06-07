@@ -6,7 +6,7 @@ import {
   ContactButton,
 } from './ContactList.styled';
 
-export default function ContactList({ contacts, ondDeleteContact }) {
+const ContactList = ({ contacts, ondDeleteContact }) => {
   return (
     <ContList>
       {contacts.map(contact => (
@@ -21,7 +21,7 @@ export default function ContactList({ contacts, ondDeleteContact }) {
       ))}
     </ContList>
   );
-}
+};
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(
@@ -33,3 +33,5 @@ ContactList.propTypes = {
   ),
   ondDeleteContact: PropTypes.func.isRequired,
 };
+
+export default ContactList;
