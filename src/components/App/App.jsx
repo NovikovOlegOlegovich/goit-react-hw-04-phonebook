@@ -7,7 +7,14 @@ import Filter from '../Filter';
 import Title from '../Title';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
+  const [contacts, setContacts] = useState(() => {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    if (!parsedContacts) {
+      return [];
+    }
+    return parsedContacts;
+  });
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
@@ -32,7 +39,7 @@ const App = () => {
       Notiflix.Notify.warning(`${name} is already in contacts`);
       return;
     }
-    setContacts([...contacts, data]);
+    setContacts(prevState => [...prevState, data]);
   };
 
   const filterHendler = event => {
@@ -49,7 +56,9 @@ const App = () => {
   };
 
   const deleteContact = contactId => {
-    setContacts(contacts.filter(contact => contact.id !== contactId));
+    setContacts(prevState => {
+      prevState.filter(contact => contact.id !== contactId);
+    });
   };
 
   const visibleContacts = getVisibleContacts();
